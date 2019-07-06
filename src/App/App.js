@@ -7,6 +7,7 @@ import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import NotefulContext from "../NotefulContext";
 import NoteAddForm  from '../NotefulForm/NoteAddForm';
+import FolderAddForm from '../NotefulForm/FolderAddForm'
 
 import "./App.css";
 
@@ -26,6 +27,11 @@ class App extends Component {
   addNote = note => {
     this.setState({
       notes: [...this.state.notes, note]
+    })
+  }
+  addFolder = folder => {
+    this.setState({
+      folders: [...this.state.folders, folder]
     })
   }
   componentDidMount() {
@@ -50,7 +56,7 @@ class App extends Component {
           <Route exact key={path} path={path} component={NoteListNav} />
         ))}
         <Route path="/note/:noteId" component={NotePageNav} />
-        <Route path="/add-folder" component={NotePageNav} />
+        <Route path="/add-folder" component={FolderAddForm} />
         <Route path="/add-note" component={NoteAddForm} />
       </>
     );
@@ -74,7 +80,8 @@ class App extends Component {
           notes: this.state.notes,
           folders: this.state.folders,
           deleteNote: this.deleteNote,
-          addNote: this.addNote
+          addNote: this.addNote,
+          addFolder: this.addFolder,
         }}
       >
         <div className="App">
