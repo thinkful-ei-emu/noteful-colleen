@@ -7,14 +7,18 @@ import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import NotefulContext from "../NotefulContext";
 import NoteAddForm  from '../NotefulForm/NoteAddForm';
-import FolderAddForm from '../NotefulForm/FolderAddForm'
+import FolderAddForm from '../NotefulForm/FolderAddForm';
+import MainError from '../MainError';
+import NavError from '../NavError'
 
 import "./App.css";
 
 class App extends Component {
   state = {
     notes: [],
-    folders: []
+    folders: [],
+    error: false,
+    errorMessage: '',
   };
 
   deleteNote = noteId => {
@@ -35,18 +39,38 @@ class App extends Component {
     })
   }
   componentDidMount() {
+    
     fetch('http://localhost:9090/folders')
-        .then(res=> res.json())
+        .then(res=> 
+          {if(!res.ok){
+            return res.json().then(error => {
+              throw error});
+            }
+            return res.json();
+          })
         .then(folders => this.setState({
             folders: folders
         }))
-
+        .catch(error =>
+          { this.setState({error: true, errorMessage: 'Failed to access the notes'
+          })
+         })
         fetch('http://localhost:9090/notes')
-        .then(res=> res.json())
+        .then(res=> 
+          {if(!res.ok){
+            return res.json().then(error => {
+              throw error});
+            }
+            return res.json();
+          })
         .then(notes => this.setState({
             notes: notes
         }))
-    
+      
+      .catch(error =>
+        { this.setState({error: true, errorMessage: 'Error: Failed to access the notes'
+          })
+          })
   }
 
   renderNavRoutes() {
@@ -74,6 +98,14 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.error){return (<>
+    <header className="App__header">
+    <h1>
+      <Link to="/">Noteful</Link>{" "}
+      <FontAwesomeIcon icon="check-double" />
+    </h1>
+    </header>
+    <div>{this.state.errorMessage}</div></>)}
     return (
       <NotefulContext.Provider
         value={{
@@ -85,14 +117,18 @@ class App extends Component {
         }}
       >
         <div className="App">
+          <NavError>
           <nav className="App__nav">{this.renderNavRoutes()}</nav>
+          </NavError>
           <header className="App__header">
             <h1>
               <Link to="/">Noteful</Link>{" "}
               <FontAwesomeIcon icon="check-double" />
             </h1>
           </header>
+          <MainError>
           <main className="App__main">{this.renderMainRoutes()}</main>
+          </MainError>
         </div>
       </NotefulContext.Provider>
     );

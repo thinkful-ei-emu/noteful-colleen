@@ -3,6 +3,7 @@ import Note from '../Note/Note'
 import './NotePageMain.css'
 import NotefulContext from '../NotefulContext';
 import { findNote } from '../notes-helpers'
+import propTypes from 'prop-types'
 
 export default class NotePageMain extends React.Component {
   static contextType = NotefulContext;
@@ -30,3 +31,10 @@ export default class NotePageMain extends React.Component {
 }
 
 
+NotePageMain.propTypes = {
+  match: propTypes.shape({
+    params: propTypes.shape({
+      noteId: propTypes.string
+    })
+  })
+}

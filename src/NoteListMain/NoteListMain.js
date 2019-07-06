@@ -5,6 +5,7 @@ import Note from "../Note/Note";
 import CircleButton from "../CircleButton/CircleButton";
 import NotefulContext from "../NotefulContext";
 import "./NoteListMain.css";
+import propTypes from 'prop-types'
 
 export default class NoteListMain extends React.Component {
   static contextType = NotefulContext;
@@ -49,4 +50,14 @@ export default class NoteListMain extends React.Component {
       </section>
     );
   }
+}
+
+NoteListMain.propTypes = {
+  match: propTypes.shape({
+    path: propTypes.string,
+    params: propTypes.shape({
+      folderId: propTypes.string
+    })
+  }),
+ 
 }

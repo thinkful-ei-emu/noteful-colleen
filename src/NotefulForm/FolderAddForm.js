@@ -1,10 +1,12 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import cuid from "cuid";
+import ValidationError from './ValidationError'
 
 class FolderAddForm extends React.Component {
   state = {
     title: "",
+    touched: false
   
   };
 
@@ -12,10 +14,18 @@ class FolderAddForm extends React.Component {
 
   onTitleChange = e => {
     this.setState({
-      title: e.target.value
+      title: e.target.value,
+      touched: true
     });
   };
- 
+  validateTitle() {
+    const name = this.state.title;
+    if (name.length === 0) {
+      return "Name is required";
+    } else if (name.length < 2){
+      return "Name must be greater than 2 characters"
+    }
+  }
   
   handleForm = e => {
     e.preventDefault();
@@ -52,13 +62,16 @@ class FolderAddForm extends React.Component {
   };
 
   render() {
-    
+    const nameError = this.validateTitle()
     return (
       <div>
         <form onSubmit={this.handleForm}>
           <label htmlFor="title">Name:</label>
           <input name="title" type="text" onChange={this.onTitleChange} />
-          <button>Add Folder</button>
+          {this.state.touched && (
+            <ValidationError message={nameError} />
+          )}
+          <button disabled={this.validateTitle()}>Add Folder</button>
         </form>
       </div>
     );

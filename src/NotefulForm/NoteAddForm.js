@@ -2,7 +2,7 @@ import React from "react";
 import NotefulContext from "../NotefulContext";
 import cuid from "cuid";
 import ValidationError from "./ValidationError";
-
+import './NotefulForm.css'
 class NoteAddForm extends React.Component {
   state = {
     title: {value: "", touched: false},

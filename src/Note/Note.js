@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
+import propTypes from 'prop-types'
 
 
 
@@ -57,4 +58,14 @@ import './Note.css'
     </div>
   )
 }
+}
+Note.defaultProps = {
+  modified : '',
+  name: '',
+  id: ''
+}
+Note.propTypes = {
+  modified: propTypes.string.isRequired,
+  name: propTypes.string.isRequired,
+  id: propTypes.string.isRequired
 }
