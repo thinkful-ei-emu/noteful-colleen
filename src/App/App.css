@@ -38,3 +38,34 @@
   height: calc(100vh - 120px);
   overflow: auto;
 }
+
+form {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 25% 3% 0%
+}
+
+.form_title{
+  color: yellow;
+  padding-top: 15%;
+  
+}
+label {
+  padding: 5%;
+  
+}
+
+form button {
+  padding: 5%;
+  background-color: white;
+  border: none;
+  margin-top: 5%;
+  font-weight: bold;
+
+}
+
+.error {
+  color: red;
+  font-weight: bolder;
+}

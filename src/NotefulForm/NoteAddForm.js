@@ -1,22 +1,26 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import cuid from "cuid";
+import ValidationError from "./ValidationError";
 
 class NoteAddForm extends React.Component {
   state = {
-    title: "",
+    title: {value: "", touched: false},
     description: "",
     folders: ""
   };
 
   static contextType = NotefulContext;
 
-  onTitleChange = e => {
+  onTitleChange(title) {
+   
     this.setState({
-      title: e.target.value
+      title: {value: title,
+      touched: true}
     });
   };
   onDescriptionChange = e => {
+    console.log('description changed')
     this.setState({
       description: e.target.value
     });
@@ -26,6 +30,15 @@ class NoteAddForm extends React.Component {
       folders: e.target.value
     });
   };
+
+  validateName() {
+    const name = this.state.title.value;
+    if (name.length === 0) {
+      return "Name is required";
+    } else if (name.length < 2){
+      return "Name must be greater than 2 characters"
+    }
+  }
   handleForm = e => {
     e.preventDefault();
     const { title, description, folders } = e.target;
@@ -67,29 +80,40 @@ class NoteAddForm extends React.Component {
   };
 
   render() {
+    const nameError = this.validateName()
     const folderChoice = this.context.folders.map((folder, index) => (
       <>
-        <input
-          key={index}
-          name="folders"
-          type="radio"
-          value={folder.id}
-          onChange={this.onFolderSelect}
-        />
-        <label>{folder.name}</label>
+        <label>
+          {folder.name}{" "}
+          <input
+            key={index}
+            name="folders"
+            type="radio"
+            value={folder.id}
+            onChange={this.onFolderSelect}
+          />
+        </label>
       </>
     ));
     return (
       <div>
         <form onSubmit={this.handleForm}>
+          <h1 className="form_title">Add Note</h1>
+          <label>Select Folder:</label>
           {folderChoice}
-          <input name="title" type="text" onChange={this.onTitleChange} />
+          <label htmlFor="title">Name:</label>
+          <input name="title" type="text" onChange={e=>this.onTitleChange(e.target.value)} />
+          {this.state.title.touched && (
+            <ValidationError message={nameError} />
+          )}
+          <label htmlFor="description">Description:</label>
+
           <textarea
             name="description"
             type="text"
             onChange={this.onDescriptionChange}
           />
-          <button>Add Note</button>
+          <button type="submit" disabled={this.validateName()}>Add Note</button>
         </form>
       </div>
     );
