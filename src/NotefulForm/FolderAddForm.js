@@ -29,14 +29,13 @@ class FolderAddForm extends React.Component {
   
   handleForm = e => {
     e.preventDefault();
-    const { title } = e.target;
-    const note = {
-      name: title.value,
-      id: cuid(),
-    };
-    fetch("http://localhost:9090/folders", {
+    const title = this.state.title
+    
+    const folder = {folder_name : title};
+
+        fetch("http://localhost:8000/api/folder", {
       method: "POST",
-      body: JSON.stringify(note),
+      body: JSON.stringify(folder),
       headers: {
         "content-type": "application/json"
       }
@@ -65,13 +64,13 @@ class FolderAddForm extends React.Component {
     const nameError = this.validateTitle()
     return (
       <div>
-        <form onSubmit={this.handleForm}>
+        <form onSubmit={e=>{this.handleForm(e)}}>
           <label htmlFor="title">Name:</label>
-          <input name="title" type="text" onChange={this.onTitleChange} />
+          <input name="title" type="text" onChange={e=>{this.onTitleChange(e)}} />
           {this.state.touched && (
             <ValidationError message={nameError} />
           )}
-          <button disabled={this.validateTitle()}>Add Folder</button>
+          <button type='submit'>Add Folder</button>
         </form>
       </div>
     );

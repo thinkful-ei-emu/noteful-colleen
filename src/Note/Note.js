@@ -12,9 +12,9 @@ import propTypes from 'prop-types'
   static contextType = NotefulContext 
 
   handleDeleteNote(noteId, callback) {
-    fetch(`http://localhost:9090/notes/${noteId}`,{
+    fetch(`http://localhost:8000/api/note/${noteId}`,{
       method: 'DELETE',
-      headers: {'content-type': 'application/json'},
+      //headers: {'content-type': 'application/json'},
     })
     .then(res=> {
       if(!res.ok){
@@ -22,7 +22,14 @@ import propTypes from 'prop-types'
           throw error
         })
       }
+      if(res.ok)
       return res.json()
+      .then(note => {
+        callback(noteId)
+      })
+      .catch(error => {
+        console.error(error)
+      })
     })
     .then(note => {
       callback(noteId)
@@ -38,7 +45,7 @@ import propTypes from 'prop-types'
     <div className='Note'>
       <h2 className='Note__title'>
         <Link to={`/note/${this.props.id}`}>
-          {this.props.name}
+          {this.props.note_name}
         </Link>
       </h2>
       <button className='Note__delete' type='button' onClick={() => this.handleDeleteNote(this.props.id, this.context.deleteNote)}>
@@ -58,14 +65,4 @@ import propTypes from 'prop-types'
     </div>
   )
 }
-}
-Note.defaultProps = {
-  modified : '',
-  name: '',
-  id: ''
-}
-Note.propTypes = {
-  modified: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
-  id: propTypes.string.isRequired
 }

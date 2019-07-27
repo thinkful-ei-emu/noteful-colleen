@@ -43,13 +43,13 @@ class NoteAddForm extends React.Component {
     e.preventDefault();
     const { title, description, folders } = e.target;
     const note = {
-      name: title.value,
-      content: description.value,
-      folderId: folders.value,
-      id: cuid(),
+      note_name: title.value,
+      note_content: description.value,
+      folder: folders.value,
       modified: new Date()
     };
-    fetch("http://localhost:9090/notes", {
+    console.log(note)
+    fetch("http://localhost:8000/api/note", {
       method: "POST",
       body: JSON.stringify(note),
       headers: {
@@ -68,8 +68,10 @@ class NoteAddForm extends React.Component {
         console.log(data);
         title.value = "";
         description.value = "";
+        folders.value="";
         console.log(this.context);
         this.context.addNote(data);
+        this.context.getNotes();
         console.log(this.props.history);
         this.props.history.push("/");
       })
@@ -84,13 +86,14 @@ class NoteAddForm extends React.Component {
     const folderChoice = this.context.folders.map((folder, index) => (
       <>
         <label>
-          {folder.name}{" "}
+          {folder.folder_name}{" "}
           <input
             key={index}
             name="folders"
             type="radio"
             value={folder.id}
             onChange={this.onFolderSelect}
+            required
           />
         </label>
       </>

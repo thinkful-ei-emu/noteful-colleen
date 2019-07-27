@@ -5,6 +5,7 @@ import Note from "../Note/Note";
 import CircleButton from "../CircleButton/CircleButton";
 import NotefulContext from "../NotefulContext";
 import "./NoteListMain.css";
+import { getNotesForFolder } from '../notes-helpers'
 import propTypes from 'prop-types'
 
 export default class NoteListMain extends React.Component {
@@ -18,19 +19,23 @@ export default class NoteListMain extends React.Component {
                 <li key={note.id}>
                   <Note
                     id={note.id}
-                    name={note.name}
+                    note_name={note.note_name}
+                    note_content={note.note_content}
                     modified={note.modified}
+                    folder={note.folder}
                   />
                 </li>
               ))
-            : this.context.notes
-                .filter(note => note.folderId === this.props.match.params.folderId)
+            : 
+                (getNotesForFolder(this.context.notes, this.props.match.params.folderId))
                 .map(note => (
                   <li key={note.id}>
                     <Note
                       id={note.id}
-                      name={note.name}
+                      note_name={note.note_name}
+                      note_content={note.note_content}
                       modified={note.modified}
+                      folder={note.folder}
                     />
                   </li>
                 ))}
@@ -52,12 +57,3 @@ export default class NoteListMain extends React.Component {
   }
 }
 
-NoteListMain.propTypes = {
-  match: propTypes.shape({
-    path: propTypes.string,
-    params: propTypes.shape({
-      folderId: propTypes.string
-    })
-  }),
- 
-}

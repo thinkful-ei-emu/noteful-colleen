@@ -38,9 +38,8 @@ class App extends Component {
       folders: [...this.state.folders, folder]
     })
   }
-  componentDidMount() {
-    
-    fetch('http://localhost:9090/folders')
+  getNotes = ()=>{
+    fetch('http://localhost:8000/api/folder')
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -55,7 +54,42 @@ class App extends Component {
           { this.setState({error: true, errorMessage: 'Failed to access the notes'
           })
          })
-        fetch('http://localhost:9090/notes')
+        fetch('http://localhost:8000/api/note')
+        .then(res=> 
+          {if(!res.ok){
+            return res.json().then(error => {
+              throw error});
+            }
+            return res.json();
+          })
+        .then(notes => this.setState({
+            notes: notes
+        }))
+      
+      .catch(error =>
+        { this.setState({error: true, errorMessage: 'Error: Failed to access the notes'
+          })
+          })
+  
+  }
+  componentDidMount() {
+    
+    fetch('http://localhost:8000/api/folder')
+        .then(res=> 
+          {if(!res.ok){
+            return res.json().then(error => {
+              throw error});
+            }
+            return res.json();
+          })
+        .then(folders => this.setState({
+            folders: folders
+        }))
+        .catch(error =>
+          { this.setState({error: true, errorMessage: 'Failed to access the notes'
+          })
+         })
+        fetch('http://localhost:8000/api/note')
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -114,6 +148,7 @@ class App extends Component {
           deleteNote: this.deleteNote,
           addNote: this.addNote,
           addFolder: this.addFolder,
+          getNotes: this.getNotes,
         }}
       >
         <div className="App">
