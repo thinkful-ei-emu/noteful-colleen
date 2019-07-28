@@ -18,11 +18,13 @@ export default class NoteListMain extends React.Component {
             ? this.context.notes.map(note => (
                 <li key={note.id}>
                   <Note
+                    key={note.id}
                     id={note.id}
                     note_name={note.note_name}
                     note_content={note.note_content}
                     modified={note.modified}
                     folder={note.folder}
+                    
                   />
                 </li>
               ))

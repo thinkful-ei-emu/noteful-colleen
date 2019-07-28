@@ -4,41 +4,38 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
-import propTypes from 'prop-types'
+
 
 
 
  export default class Note extends React.Component {
   static contextType = NotefulContext 
 
-  handleDeleteNote(noteId, callback) {
+  handleDeleteNote(noteId) {
+    
+
     fetch(`http://localhost:8000/api/note/${noteId}`,{
       method: 'DELETE',
       //headers: {'content-type': 'application/json'},
     })
-    .then(res=> {
-      if(!res.ok){
-        return res.json().then(error => {
-          throw error
-        })
+    .then(res => {
+      if (!res.ok) {
+        return res.status().then(error => {
+          throw error;
+        });
       }
-      if(res.ok)
-      return res.json()
-      .then(note => {
-        callback(noteId)
-      })
-      .catch(error => {
-        console.error(error)
-      })
+      return res.status();
     })
-    .then(note => {
-      callback(noteId)
+    .then(() => {
+      this.context.getNotes();
+      
     })
+    
     .catch(error => {
-      console.error(error)
-    })
+      this.setState({ error });
+    });
+    
   }
-
 
   render(){
   return (
@@ -48,11 +45,12 @@ import propTypes from 'prop-types'
           {this.props.note_name}
         </Link>
       </h2>
-      <button className='Note__delete' type='button' onClick={() => this.handleDeleteNote(this.props.id, this.context.deleteNote)}>
+      <button className='Note__delete' type='button' onClick={() => this.handleDeleteNote(this.props.id)}>
         <FontAwesomeIcon icon='trash-alt' />
         {' '}
         remove
       </button>
+     
       <div className='Note__dates'>
         <div className='Note__dates-modified'>
           Modified

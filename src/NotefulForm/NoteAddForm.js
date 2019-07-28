@@ -48,7 +48,6 @@ class NoteAddForm extends React.Component {
       folder: folders.value,
       modified: new Date()
     };
-    console.log(note)
     fetch("http://localhost:8000/api/note", {
       method: "POST",
       body: JSON.stringify(note),
@@ -65,14 +64,11 @@ class NoteAddForm extends React.Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
         title.value = "";
         description.value = "";
         folders.value="";
-        console.log(this.context);
         this.context.addNote(data);
         this.context.getNotes();
-        console.log(this.props.history);
         this.props.history.push("/");
       })
       .catch(error => {

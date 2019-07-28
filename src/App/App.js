@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NoteListNav from "../NoteListNav/NoteListNav";
-import NotePageNav from "../NotePageNav/NotePageNav";
+//import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import NotefulContext from "../NotefulContext";
@@ -113,7 +113,6 @@ class App extends Component {
         {["/", "/folder/:folderId"].map(path => (
           <Route exact key={path} path={path} component={NoteListNav} />
         ))}
-        <Route path="/note/:noteId" component={NotePageNav} />
         <Route path="/add-folder" component={FolderAddForm} />
         <Route path="/add-note" component={NoteAddForm} />
       </>
@@ -127,6 +126,7 @@ class App extends Component {
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
         <Route path="/note/:noteId" component={NotePageMain} />
+
       </>
     );
   }
