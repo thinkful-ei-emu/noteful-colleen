@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NoteListNav from "../NoteListNav/NoteListNav";
-//import NotePageNav from "../NotePageNav/NotePageNav";
+import NotePageNav from "../NotePageNav/NotePageNav";
 import NoteListMain from "../NoteListMain/NoteListMain";
 import NotePageMain from "../NotePageMain/NotePageMain";
 import NotefulContext from "../NotefulContext";
 import NoteAddForm  from '../NotefulForm/NoteAddForm';
+import NoteUpdateForm from '../NotefulForm/NoteModifyForm';
 import FolderAddForm from '../NotefulForm/FolderAddForm';
+import FolderRenameForm from '../NotefulForm/FolderRenameForm'
 import MainError from '../MainError';
 import NavError from '../NavError'
 
@@ -111,10 +113,15 @@ class App extends Component {
     return (
       <>
         {["/", "/folder/:folderId"].map(path => (
+          <>
           <Route exact key={path} path={path} component={NoteListNav} />
+          <Route exact key={path} path={path} component={NotePageNav} />
+          </>
         ))}
         <Route path="/add-folder" component={FolderAddForm} />
+        <Route path="/rename-folder" component={FolderRenameForm} />
         <Route path="/add-note" component={NoteAddForm} />
+        <Route path="/update-note/:id" component={NoteUpdateForm}/>
       </>
     );
   }

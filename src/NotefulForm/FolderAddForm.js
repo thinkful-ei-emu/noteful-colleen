@@ -71,6 +71,7 @@ class FolderAddForm extends React.Component {
             <ValidationError message={nameError} />
           )}
           <button type='submit'>Add Folder</button>
+          <button onClick={e=>this.props.history.goBack()}>Go Back</button>
         </form>
       </div>
     );

@@ -2,7 +2,6 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CircleButton from '../CircleButton/CircleButton'
 import './NotePageNav.css'
-import propTypes from 'prop-types'
 
 export default class NotePageNav extends React.Component {
   
@@ -29,7 +28,3 @@ export default class NotePageNav extends React.Component {
 }
 }
 
-NotePageNav.propTypes = {
-  folder : propTypes.objectOf(propTypes.string),
-  history: propTypes.object
-}

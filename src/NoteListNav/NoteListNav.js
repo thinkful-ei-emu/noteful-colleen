@@ -37,6 +37,16 @@ export default class NoteListNav extends React.Component {
           <br />
           Folder
         </CircleButton>
+        <CircleButton
+          tag={Link}
+          to='/rename-folder'
+          type='button'
+          className='NotePageNav_change-button'
+          >
+            <FontAwesomeIcon icon='pen-fancy'/>
+            <br/>
+          Edit Folder
+        </CircleButton>
       </div>
     </div>
   )

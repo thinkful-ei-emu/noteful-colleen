@@ -56,6 +56,9 @@ export default class NotePageMain extends React.Component {
         {' '}
         remove
       </button>
+      <Link to={`/update-note/${note.id}`}>
+      <button className="note_modify" type='button'>Modify note</button>
+      </Link>
      
       <div className='Note__dates'>
         <div className='Note__dates-modified'>
@@ -71,7 +74,7 @@ export default class NotePageMain extends React.Component {
         {note.note_content.split(/\n \r|\n/).map((para, i) =>
           <p key={i}>{para}</p>
         )}
-      </div>import Note from '../Note/Note'
+      </div>
 
     </section>
   )
