@@ -8,6 +8,31 @@ import './NoteListNav.css'
 
 export default class NoteListNav extends React.Component {
   static contextType = NotefulContext
+  handleDeleteFolder(event, folderId) {
+    event.preventDefault()
+    console.log(this.props)
+    fetch(`http://localhost:8000/api/folder/${folderId}`,{
+      method: 'DELETE',
+      //headers: {'content-type': 'application/json'},
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.status().then(error => {
+          throw error;
+        });
+      }
+      return res.status();
+    })
+    
+    .catch(error => {
+      this.setState({ error });
+    });
+    this.context.deleteFolder(folderId)
+    this.context.getNotes()
+    this.props.history.push('/')
+   
+  }
+
   render () {
   return (
     <div className='NoteListNav'>
@@ -21,7 +46,10 @@ export default class NoteListNav extends React.Component {
               <span className='NoteListNav__num-notes'>
                 {countNotesForFolder(this.context.notes, folder.id)}
               </span>
-              {folder.folder_name}
+              {folder.folder_name}<br/>
+              <button className="deletefolderbutton" type='button' onClick={(e) => this.handleDeleteFolder(e, folder.id)}>
+        delete folder
+      </button>
             </NavLink>
           </li>
         )}

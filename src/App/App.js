@@ -40,6 +40,12 @@ class App extends Component {
       folders: [...this.state.folders, folder]
     })
   }
+  deleteFolder = folderId => {
+    const newFolders = this.state.folders.filter(folder => folder.id !== folderId)
+    this.setState({
+      folders: newFolders
+    })
+  }
   getNotes = ()=>{
     fetch('http://localhost:8000/api/folder')
         .then(res=> 
@@ -153,6 +159,7 @@ class App extends Component {
           notes: this.state.notes,
           folders: this.state.folders,
           deleteNote: this.deleteNote,
+          deleteFolder: this.deleteFolder,
           addNote: this.addNote,
           addFolder: this.addFolder,
           getNotes: this.getNotes,
