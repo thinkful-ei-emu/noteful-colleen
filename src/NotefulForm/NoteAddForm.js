@@ -1,7 +1,7 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
-import cuid from "cuid";
 import ValidationError from "./ValidationError";
+import config from '../../config'
 import './NotefulForm.css'
 class NoteAddForm extends React.Component {
   state = {
@@ -20,7 +20,6 @@ class NoteAddForm extends React.Component {
     });
   };
   onDescriptionChange = e => {
-    console.log('description changed')
     this.setState({
       description: e.target.value
     });
@@ -48,7 +47,7 @@ class NoteAddForm extends React.Component {
       folder: folders.value,
       modified: new Date()
     };
-    fetch("http://localhost:8000/api/note", {
+    fetch(`${config.API_ENDPOINT}/note`, {
       method: "POST",
       body: JSON.stringify(note),
       headers: {
@@ -73,7 +72,6 @@ class NoteAddForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error });
-        console.log(error);
       });
   };
 

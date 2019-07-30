@@ -2,7 +2,6 @@ import React from 'react'
 import NotefulContext from '../NotefulContext'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Note.css'
 
 

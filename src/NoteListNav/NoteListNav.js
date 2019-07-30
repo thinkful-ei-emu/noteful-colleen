@@ -5,15 +5,13 @@ import CircleButton from '../CircleButton/CircleButton'
 import { countNotesForFolder } from '../notes-helpers'
 import NotefulContext from '../NotefulContext'
 import './NoteListNav.css'
-
+import config from '../../config'
 export default class NoteListNav extends React.Component {
   static contextType = NotefulContext
   handleDeleteFolder(event, folderId) {
     event.preventDefault()
-    console.log(this.props)
-    fetch(`http://localhost:8000/api/folder/${folderId}`,{
+    fetch(`${config.API_ENDPOINT}/folder/${folderId}`,{
       method: 'DELETE',
-      //headers: {'content-type': 'application/json'},
     })
     .then(res => {
       if (!res.ok) {

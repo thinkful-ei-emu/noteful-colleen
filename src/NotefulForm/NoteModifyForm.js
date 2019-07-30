@@ -1,8 +1,8 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
-import cuid from "cuid";
 import ValidationError from "./ValidationError";
 import './NotefulForm.css'
+import config from '../../config'
 class NoteUpdateForm extends React.Component {
   state = {
     title: {value: "", touched: false},
@@ -62,7 +62,7 @@ class NoteUpdateForm extends React.Component {
       updateNote={...updateNote, folder: note.folder}
     }
      ;
-    fetch(`http://localhost:8000/api/note/${id}`, {
+    fetch(`${config.API_ENDPOINT}/note/${id}`, {
       method: "PATCH",
       body: JSON.stringify(updateNote),
       headers: {
@@ -86,7 +86,6 @@ class NoteUpdateForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error });
-        console.log(error);
       });
   };
 

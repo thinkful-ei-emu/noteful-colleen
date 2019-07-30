@@ -6,14 +6,13 @@ import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../Note/Note.css'
-
+import config from '../../config'
 export default class NotePageMain extends React.Component {
   static contextType = NotefulContext;
 
   handleDeleteNote(event, noteId) {
     event.preventDefault()
-    console.log(this.props)
-    fetch(`http://localhost:8000/api/note/${noteId}`,{
+    fetch(`${config.API_ENDPOINT}/note/${noteId}`,{
       method: 'DELETE',
       //headers: {'content-type': 'application/json'},
     })

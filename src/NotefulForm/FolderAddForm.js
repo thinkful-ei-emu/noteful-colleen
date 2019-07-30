@@ -1,8 +1,7 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
-import cuid from "cuid";
 import ValidationError from './ValidationError'
-
+import config from '../../config'
 class FolderAddForm extends React.Component {
   state = {
     title: "",
@@ -33,7 +32,7 @@ class FolderAddForm extends React.Component {
     
     const folder = {folder_name : title};
 
-        fetch("http://localhost:8000/api/folder", {
+        fetch(`${config.API_ENDPOINT}/folder`, {
       method: "POST",
       body: JSON.stringify(folder),
       headers: {
@@ -54,7 +53,6 @@ class FolderAddForm extends React.Component {
       })
       .catch(error => {
         this.setState({ error });
-        console.log(error);
       });
   };
 
@@ -64,7 +62,7 @@ class FolderAddForm extends React.Component {
       <div>
         <form onSubmit={e=>{this.handleForm(e)}}>
           <label htmlFor="title">Name:</label>
-          <input name="title" type="text" onChange={e=>{this.onTitleChange(e); console.log(e.target.value)}} />
+          <input name="title" type="text" onChange={e=>this.onTitleChange(e)} />
           {this.state.touched && (
             <ValidationError message={nameError} />
           )}
