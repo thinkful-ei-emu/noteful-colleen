@@ -1,7 +1,7 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import ValidationError from "./ValidationError";
-import config from '../../config'
+import config from '../config'
 import './NotefulForm.css'
 class NoteAddForm extends React.Component {
   state = {
@@ -47,7 +47,7 @@ class NoteAddForm extends React.Component {
       folder: folders.value,
       modified: new Date()
     };
-    fetch(`${config.API_ENDPOINT}/note`, {
+    fetch(`${config.API_ENDPOINT}/api/note`, {
       method: "POST",
       body: JSON.stringify(note),
       headers: {

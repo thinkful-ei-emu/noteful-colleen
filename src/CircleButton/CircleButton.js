@@ -1,6 +1,5 @@
 import React from 'react'
 import './CircleButton.css'
-import propTypes from 'prop-types'
 
 
 export default function NavCircleButton(props) {
@@ -16,13 +15,4 @@ export default function NavCircleButton(props) {
     props.children
   )
 }
-NavCircleButton.propTypes = {
-  tag : propTypes.func,
-  to : propTypes.string,
-  type: propTypes.string,
-  className : propTypes.string,
-  children : propTypes.array
-} 
-NavCircleButton.defaultProps ={
-  tag: 'a',
-}
+

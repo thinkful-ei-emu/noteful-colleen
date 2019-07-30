@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
-import NoteListNav from './NoteListNav'
+import NoteListMain from '../NoteListMain/NoteListMain'
 
-describe(`NoteListNav component`, () => {
+describe(`NoteListMain component`, () => {
   const props = {
     notes: [
       {
@@ -34,30 +34,16 @@ describe(`NoteListNav component`, () => {
         "folderId": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
         "content": "Eum culpa odit."
       },
-    ],
-    folders: [
-      {
-        "id": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
-        "name": "Important"
-      },
-      {
-        "id": "b07161a6-ffaf-11e8-8eb2-f2801f1b9fd1",
-        "name": "Super"
-      },
-      {
-        "id": "b07162f0-ffaf-11e8-8eb2-f2801f1b9fd1",
-        "name": "Spangley"
-      }
     ]
   }
 
-  it('renders a .NoteListNav by default', () => {
-    const wrapper = shallow(<NoteListNav />)
+  it('renders a .NoteListMain by default', () => {
+    const wrapper = shallow(<NoteListMain />)
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
-  it('renders a link in ul for each folder in array', () => {
-    const ul = shallow(<NoteListNav {...props} />)
+  it('renders a Note in ul for each notes in array', () => {
+    const ul = shallow(<NoteListMain {...props} />)
       .find('ul')
     expect(toJson(ul)).toMatchSnapshot()
   })

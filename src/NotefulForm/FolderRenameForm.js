@@ -1,7 +1,7 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import ValidationError from './ValidationError'
-import config from '../../config'
+import config from '../config'
 class FolderRenameForm extends React.Component {
   state = {
     title: "",
@@ -36,7 +36,7 @@ class FolderRenameForm extends React.Component {
     const id = this.state.id
     const folder = {folder_name : title};
 
-        fetch(`${config.API_ENDPOINT}/folder/${id}`, {
+        fetch(`${config.API_ENDPOINT}/api/folder/${id}`, {
       method: "PATCH",
       body: JSON.stringify(folder),
       headers: {

@@ -10,33 +10,10 @@ exports[`Note component renders a .Note by default 1`] = `
     <Link
       replace={false}
       to="/note/undefined"
-    />
+    >
+      View note: 
+    </Link>
   </h2>
-  <button
-    className="Note__delete"
-    type="button"
-  >
-    <FontAwesomeIcon
-      border={false}
-      className=""
-      fixedWidth={false}
-      flip={null}
-      icon="trash-alt"
-      inverse={false}
-      listItem={false}
-      mask={null}
-      pull={null}
-      pulse={false}
-      rotation={null}
-      size={null}
-      spin={false}
-      symbol={false}
-      title=""
-      transform={null}
-    />
-     
-    remove
-  </button>
   <div
     className="Note__dates"
   >
@@ -66,34 +43,9 @@ exports[`Note component renders the Note given props 1`] = `
       replace={false}
       to="/note/a"
     >
-      test-class-name
+      View note: 
     </Link>
   </h2>
-  <button
-    className="Note__delete"
-    type="button"
-  >
-    <FontAwesomeIcon
-      border={false}
-      className=""
-      fixedWidth={false}
-      flip={null}
-      icon="trash-alt"
-      inverse={false}
-      listItem={false}
-      mask={null}
-      pull={null}
-      pulse={false}
-      rotation={null}
-      size={null}
-      spin={false}
-      symbol={false}
-      title=""
-      transform={null}
-    />
-     
-    remove
-  </button>
   <div
     className="Note__dates"
   >

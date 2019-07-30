@@ -11,7 +11,8 @@ import NoteUpdateForm from '../NotefulForm/NoteModifyForm';
 import FolderAddForm from '../NotefulForm/FolderAddForm';
 import FolderRenameForm from '../NotefulForm/FolderRenameForm'
 import MainError from '../MainError';
-import NavError from '../NavError'
+import NavError from '../NavError';
+import config from '../config';
 
 import "./App.css";
 
@@ -56,7 +57,7 @@ class App extends Component {
     })
   }
   getNotes = ()=>{
-    fetch('http://localhost:8000/api/folder')
+    fetch(`${config.API_ENDPOINT}/api/folder`)
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -71,7 +72,7 @@ class App extends Component {
           { this.setState({error: true, errorMessage: 'Failed to access the notes'
           })
          })
-        fetch('http://localhost:8000/api/note')
+        fetch(`${config.API_ENDPOINT}/api/note/`)
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -91,7 +92,7 @@ class App extends Component {
   }
   componentDidMount() {
     
-    fetch('http://localhost:8000/api/folder')
+    fetch(`${config.API_ENDPOINT}/api/folder/`)
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -106,7 +107,7 @@ class App extends Component {
           { this.setState({error: true, errorMessage: 'Failed to access the notes'
           })
          })
-        fetch('http://localhost:8000/api/note')
+        fetch(`${config.API_ENDPOINT}/api/note/`)
         .then(res=> 
           {if(!res.ok){
             return res.json().then(error => {
@@ -133,12 +134,14 @@ class App extends Component {
           <Route exact key={path} path={path} component={NotePageNav} />
           </>
         ))}
-        <Route path="/add-folder" component={FolderAddForm} />
-        <Route path="/rename-folder" component={FolderRenameForm} />
-        <Route path="/add-note" component={NoteAddForm} />
-        <Route path="/update-note/:id" component={NoteUpdateForm}/>
+        <Route key='add-folder' path="/add-folder" component={FolderAddForm} />
+        <Route key ='rename-folder' path="/rename-folder" component={FolderRenameForm} />
+        <Route key='add-note' path="/add-note" component={NoteAddForm} />
+        {["/update-note/:id"].map(path=> (
+          <Route key={path} component={NoteUpdateForm} />
+        ))}
       </>
-    );
+    )
   }
 
   renderMainRoutes() {
@@ -147,8 +150,10 @@ class App extends Component {
         {["/", "/folder/:folderId"].map(path => (
           <Route exact key={path} path={path} component={NoteListMain} />
         ))}
-        <Route path="/note/:noteId" component={NotePageMain} />
-
+        {["/note/:noteId"].map(path=>
+        (<Route key={path} path="/note/:noteId" component={NotePageMain} />
+          ))}
+        
       </>
     );
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import NotefulContext from "../NotefulContext";
 import ValidationError from './ValidationError'
-import config from '../../config'
+import config from '../config'
 class FolderAddForm extends React.Component {
   state = {
     title: "",
@@ -32,7 +32,7 @@ class FolderAddForm extends React.Component {
     
     const folder = {folder_name : title};
 
-        fetch(`${config.API_ENDPOINT}/folder`, {
+        fetch(`${config.API_ENDPOINT}/api/folder`, {
       method: "POST",
       body: JSON.stringify(folder),
       headers: {
