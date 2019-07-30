@@ -28,8 +28,7 @@ export default class NoteListNav extends React.Component {
       this.setState({ error });
     });
     this.context.deleteFolder(folderId)
-    this.context.getNotes()
-    this.props.history.push('/')
+    
    
   }
 
@@ -69,10 +68,8 @@ export default class NoteListNav extends React.Component {
           tag={Link}
           to='/rename-folder'
           type='button'
-          className='NotePageNav_change-button'
+          className='NoteListNav__change-button'
           >
-            <FontAwesomeIcon icon='pen-fancy'/>
-            <br/>
           Edit Folder
         </CircleButton>
       </div>

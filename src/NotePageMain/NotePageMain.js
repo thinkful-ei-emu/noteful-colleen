@@ -30,14 +30,12 @@ export default class NotePageMain extends React.Component {
       this.setState({ error });
     });
     this.context.deleteNote(noteId)
-    this.context.getNotes()
     this.props.history.push('/')
    
   }
 
   render() {
     const note = findNote(this.context.notes, this.props.match.params.noteId)
-    
     if (!note) {
       return <div>Loading..</div>
     }

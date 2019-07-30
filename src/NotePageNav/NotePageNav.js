@@ -8,6 +8,7 @@ export default class NotePageNav extends React.Component {
   render(){
   return (
     <div className='NotePageNav'>
+      <div className='NotePageNav__button-wrapper'>
       <CircleButton
         tag='button'
         role='link'
@@ -18,6 +19,7 @@ export default class NotePageNav extends React.Component {
         <br />
         Back
       </CircleButton>
+      </div>
       {this.props.folder && (
         <h3 className='NotePageNav__folder-name'>
           {this.props.folder.name}

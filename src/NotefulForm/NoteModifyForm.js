@@ -6,8 +6,8 @@ import './NotefulForm.css'
 class NoteUpdateForm extends React.Component {
   state = {
     title: {value: "", touched: false},
-    description: "",
-    folders: ""
+    description: {value:"", touched: false},
+    folders: {value:"", touched: false}
   };
 
   static contextType = NotefulContext;
@@ -20,21 +20,23 @@ class NoteUpdateForm extends React.Component {
     });
   };
   onDescriptionChange = e => {
-    console.log('description changed')
     this.setState({
-      description: e.target.value
+      description: {value: e.target.value, 
+      touched: true}
     });
   };
   onFolderSelect = e => {
     this.setState({
-      folders: e.target.value
+      folders: {value: e.target.value, touched:true }
     });
   };
 
-  validateName() {
+  validateForm() {
     const name = this.state.title.value;
-    if (name.length === 0) {
-      return "Name is required";
+    const description =this.state.description.value;
+    const folders=this.state.folders.value;
+    if (name === "" || description === "" || folders === "") {
+      return "Need to supply at least one field to update";
     } else if (name.length < 2){
       return "Name must be greater than 2 characters"
     }
@@ -49,22 +51,33 @@ class NoteUpdateForm extends React.Component {
       folder: folders.value,
       modified: new Date()
     };
+    let updateNote = {modified: new Date()};
+    if(note.note_name){
+      updateNote ={ ...updateNote, note_name: note.note_name}
+    }
+    if(note.note_content){
+      updateNote ={ ...updateNote, note_content: note.note_content}
+    }
+    if(note.folder){
+      updateNote={...updateNote, folder: note.folder}
+    }
+     ;
     fetch(`http://localhost:8000/api/note/${id}`, {
       method: "PATCH",
-      body: JSON.stringify(note),
+      body: JSON.stringify(updateNote),
       headers: {
         "content-type": "application/json"
       }
     })
       .then(res => {
         if (!res.ok) {
-          return res.json().then(error => {
+          return res.status.then(error => {
             throw error;
           });
         }
-        return res.json();
+        return true;
       })
-      .then(data => {
+      .then(() => {
         title.value = "";
         description.value = "";
         folders.value="";
@@ -78,7 +91,7 @@ class NoteUpdateForm extends React.Component {
   };
 
   render() {
-    const nameError = this.validateName()
+    const nameError = this.validateForm()
     const folderChoice = this.context.folders.map((folder, index) => (
       <>
         <label>
@@ -102,7 +115,7 @@ class NoteUpdateForm extends React.Component {
           {folderChoice}
           <label htmlFor="title">Change Name:</label>
           <input name="title" type="text" onChange={e=>this.onTitleChange(e.target.value)} />
-          {this.state.title.touched && (
+          {(this.state.title.touched || this.state.description.touched || this.state.folders.touched)&& (
             <ValidationError message={nameError} />
           )}
           <label htmlFor="description">Change Description:</label>

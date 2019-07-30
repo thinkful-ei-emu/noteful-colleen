@@ -9,14 +9,7 @@
   margin: 0 0 0 auto;
   max-width: 180px;
 }
-.NotePageNav__change-button{
-  margin: 20px auto;
 
-}
-.NotePageNav__change-button:hover {
-  background-color: rgb(47, 61, 255);
-  color:white;
-}
 
 .NoteListNav__add-folder-button {
   margin: 20px auto;
@@ -25,7 +18,14 @@
   background-color: #29862e;
   color: white;
 }
-
+.NoteListNav__change-button{
+  margin: 20px auto;
+  
+}
+.NoteListNav__change-button:hover {
+  background-color: rgb(47, 61, 255);
+  color:white;
+}
 .NoteListNav__folder-link {
   background-color: #030f1f;
   color: #b5b3b3;

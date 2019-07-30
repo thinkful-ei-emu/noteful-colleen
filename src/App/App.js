@@ -40,6 +40,15 @@ class App extends Component {
       folders: [...this.state.folders, folder]
     })
   }
+  renameFolder = (folderId, newName) => {
+    const newFolders = this.state.folders.filter(folder=> folder.id != folderId)
+    const changeFolder = this.state.folders.filter(folder=> folder.id == folderId)
+    console.log(changeFolder)
+    changeFolder[0].folder_name = newName
+    this.setState({
+      folders: [...newFolders, changeFolder]
+    })
+  }
   deleteFolder = folderId => {
     const newFolders = this.state.folders.filter(folder => folder.id !== folderId)
     this.setState({
@@ -162,6 +171,7 @@ class App extends Component {
           deleteFolder: this.deleteFolder,
           addNote: this.addNote,
           addFolder: this.addFolder,
+          renameFolder: this.renameFolder,
           getNotes: this.getNotes,
         }}
       >

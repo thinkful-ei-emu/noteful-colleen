@@ -33,7 +33,7 @@ class FolderRenameForm extends React.Component {
   
   handleForm = e => {
     e.preventDefault();
-    
+    console.log('1')
     const title = this.state.title
     const id = this.state.id
     const folder = {folder_name : title};
@@ -46,21 +46,29 @@ class FolderRenameForm extends React.Component {
       }
     })
     .then(res => {
+      
+      console.log(res)
       if (!res.ok) {
-        return res.status().then(error => {
+        return res.status.then(error => {
           throw error;
         });
       }
-      return res.status();
+      return res.status;
+    })
+    .then(()=>{
+      console.log('3')
+      this.context.renameFolder(id, title)
+      this.context.getNotes()
+      this.props.history.push('/')
+      console.log('4')
     })
     
     .catch(error => {
+      console.log(error)
       this.setState({ error });
     });
     
-    this.context.getNotes()
-    this.props.history.push('/')
-   
+    
   };
 
   render() {

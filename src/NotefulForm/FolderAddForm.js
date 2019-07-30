@@ -49,9 +49,7 @@ class FolderAddForm extends React.Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
-        title.value = "";  
-        this.context.addFolder(data);
+        this.context.getNotes();
         this.props.history.push("/");
       })
       .catch(error => {
@@ -66,7 +64,7 @@ class FolderAddForm extends React.Component {
       <div>
         <form onSubmit={e=>{this.handleForm(e)}}>
           <label htmlFor="title">Name:</label>
-          <input name="title" type="text" onChange={e=>{this.onTitleChange(e)}} />
+          <input name="title" type="text" onChange={e=>{this.onTitleChange(e); console.log(e.target.value)}} />
           {this.state.touched && (
             <ValidationError message={nameError} />
           )}
